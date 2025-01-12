@@ -10,14 +10,10 @@
 - 高亮显示匹配结果
 
 ## 安装
-
-1. 首先安装 [Tampermonkey](https://www.tampermonkey.net/)
-2. 然后点击 [这里](https://greasyfork.org/scripts/您的脚本ID/code/煎蛋用户名搜索.user.js) 安装脚本
-
 通过github安装：
 
 1. 首先安装 [Tampermonkey](https://www.tampermonkey.net/)
-2. 然后点击 [这里](https://github.com/cornradio/jandan-username-search/blob/main/jandan-username-search.user.js) 安装脚本
+2. 然后点击 [这里](https://github.com/cornradio/jandanusersearch/raw/refs/heads/master/jandan.user.js) 安装脚本
 
 ## 使用方法
 
