@@ -109,7 +109,7 @@
             currentMatches.forEach((match, index) => {
                 match.classList.add('highlight-author');
                 if (index === currentMatchIndex) {
-                    match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    match.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         } else {
