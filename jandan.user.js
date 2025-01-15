@@ -24,6 +24,16 @@
     container.style.display = 'flex';
     container.style.gap = '5px';
 
+    // 在创建搜索框之前添加计数器和当前索引变量
+    const counter = document.createElement('span');
+    counter.textContent = '0/0';
+    counter.style.padding = '8px';
+    counter.style.color = '#666';
+    counter.style.fontSize = '14px';
+    counter.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+    counter.style.border = '1px solid #ccc';
+    counter.style.borderRadius = '4px';
+
     // 搜索框
     const search = document.createElement('input');
     search.type = 'text';
@@ -46,53 +56,65 @@
     // 添加提示
     search.title = '自动搜素当前页，如果没有自动翻页';
 
-    // 在函数外部添加一个变量来跟踪当前找到的索引
-    let currentFoundIndex = -1;
-    // 在函数外部添加一个变量来标记是否已经到达当前页面的最后一个匹配项
-    let isLastMatchInPage = false;
+    // 添加一个变量来跟踪当前匹配的索引
+    let currentMatchIndex = -1;
+    let currentMatches = [];
 
-    // 搜索功能
+    // 修改搜索功能
     async function searchUsername() {
-        const username = search.value.trim();
-        if (!username) return;
-
-        const authors = Array.from(document.querySelectorAll('.author'));
-        
-        // 清除所有高亮
+        // 移除之前的高亮
         document.querySelectorAll('.highlight-author').forEach(el => {
             el.classList.remove('highlight-author');
         });
 
-        // 找出所有匹配的作者
-        const matchedAuthors = authors.filter(author => 
+        const username = search.value.trim();
+        if (!username) {
+            counter.textContent = '0/0';
+            currentMatches = [];
+            currentMatchIndex = -1;
+            return;
+        }
+
+        const authors = document.querySelectorAll('.author');
+        currentMatches = Array.from(authors).filter(author => 
             author.textContent.includes(username)
         );
 
-        if (matchedAuthors.length > 0) {
-            // 如果已经是最后一个且再次点击，则跳转到下一页
-            if (isLastMatchInPage) {
-                const nextPageLink = document.querySelector('.previous-comment-page');
-                if (nextPageLink) {
-                    sessionStorage.setItem('searchUsername', username);
-                    sessionStorage.setItem('autoSearch', 'true');
-                    nextPageLink.click();
-                    return;
+        if (currentMatches.length > 0) {
+            // 如果是新的搜索，重置索引
+            if (currentMatchIndex === -1) {
+                currentMatchIndex = 0;
+            } else {
+                // 移动到下一个匹配
+                currentMatchIndex++;
+                // 如果已经是最后一个匹配，则跳转到下一页
+                if (currentMatchIndex >= currentMatches.length) {
+                    const nextPageLink = document.querySelector('.previous-comment-page');
+                    if (nextPageLink) {
+                        sessionStorage.setItem('searchUsername', username);
+                        sessionStorage.setItem('autoSearch', 'true');
+                        nextPageLink.click();
+                        return;
+                    } else {
+                        alert('已到最后一页，未找到更多结果');
+                        currentMatchIndex = currentMatches.length - 1;
+                    }
                 }
             }
 
-            // 增加当前索引
-            currentFoundIndex = (currentFoundIndex + 1) % matchedAuthors.length;
-            const currentAuthor = matchedAuthors[currentFoundIndex];
-            
-            // 高亮并滚动到当前匹配的作者
-            currentAuthor.classList.add('highlight-author');
-            currentAuthor.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // 更新是否到达当前页面最后一个匹配项的标记
-            isLastMatchInPage = (currentFoundIndex === matchedAuthors.length - 1);
-            
+            // 更新计数器显示当前位置/匹配总数
+            counter.textContent = `${currentMatchIndex + 1}/${currentMatches.length}`;
+
+            // 高亮并滚动到当前匹配
+            currentMatches.forEach((match, index) => {
+                match.classList.add('highlight-author');
+                if (index === currentMatchIndex) {
+                    match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
         } else {
-            // 当前页面没有找到匹配项，直接跳转下一页
+            counter.textContent = '0/0';
+            currentMatchIndex = -1;
             const nextPageLink = document.querySelector('.previous-comment-page');
             if (nextPageLink) {
                 sessionStorage.setItem('searchUsername', username);
@@ -110,10 +132,13 @@
         const searchUsername = sessionStorage.getItem('searchUsername');
         
         if (autoSearch === 'true' && searchUsername) {
+            // 清除自动搜索标记
             sessionStorage.removeItem('autoSearch');
+            
+            // 设置搜索框的值
             search.value = searchUsername;
-            currentFoundIndex = -1; // 重置索引
-            isLastMatchInPage = false; // 重置最后匹配项标记
+            
+            // 缩短延迟时间，加快搜索速度
             setTimeout(() => {
                 searchUsername();
             }, 500);
@@ -139,7 +164,11 @@
         }
     });
 
-    // 将元素添加到页面
+    // 修改container样式
+    container.style.alignItems = 'center';
+
+    // 修改元素添加顺序
+    container.appendChild(counter);
     container.appendChild(search);
     container.appendChild(searchBtn);
     document.body.appendChild(container);
