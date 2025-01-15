@@ -13,7 +13,8 @@
 通过github安装：
 
 1. 首先安装 [Tampermonkey](https://www.tampermonkey.net/)
-2. 然后点击 [这里](https://github.com/cornradio/jandanusersearch/raw/refs/heads/master/jandan.user.js) 安装脚本
+2. 然后点击 [这里](https://github.com/cornradio/jandanusersearch/raw/refs/heads/master/jandan.user.js) 安装脚本（github）
+或者 [这里](https://greasyfork.org/zh-CN/scripts/523770-%E7%85%8E%E8%9B%8B%E7%94%A8%E6%88%B7%E5%90%8D%E6%90%9C%E7%B4%A2) 安装脚本（greasyfork）
 
 ## 使用方法
 
