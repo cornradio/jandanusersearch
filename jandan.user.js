@@ -2,15 +2,15 @@
 // @name         煎蛋用户名搜索
 // @name:en      JandanUserSearch
 // @namespace    https://github.com/cornradio/jandan-user-search
-// @version      1.0.0
+// @version      1.0.2
 // @description  在煎蛋网页添加用户名搜索功能，支持自动翻页查找
 // @description:en  Add username search function to jandan.net with auto-page-turning
 // @author       您的名字
 // @match        https://jandan.net/*
+// @match        https://i.jandan.net/*
 // @license      MIT
 // @icon         https://jandan.net/favicon.ico
 // @grant        none
-// @supportURL   https://github.com/cornradio/jandan-user-search/issues
 // ==/UserScript==
 
 (function() {
@@ -75,9 +75,10 @@
             return;
         }
 
-        const authors = document.querySelectorAll('.author');
+        // 同时支持PC版和手机版的选择器
+        const authors = document.querySelectorAll('.author, li[id^="comment-"] > b');
         currentMatches = Array.from(authors).filter(author => 
-            author.textContent.includes(username)
+            author.textContent.toLowerCase().includes(username.toLowerCase())
         );
 
         if (currentMatches.length > 0) {
