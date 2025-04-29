@@ -1,28 +1,25 @@
-# 煎蛋用户名搜索
+# 煎蛋用户名搜索脚本
 
-一个帮助在煎蛋网快速查找用户发言的油猴脚本。
+一个简单的油猴脚本，帮你快速在煎蛋网找某个用户的发言。兼容新版煎蛋。
 
-## 功能特点
+## 怎么用
 
-- 在页面右上角添加搜索框
-- 支持按用户名搜索评论
-- 自动翻页查找
-- 高亮显示匹配结果
+1.  在煎蛋网页右上角搜索框里输入你想找的用户名。
+2.  按回车或者点搜索按钮。
+3.  脚本会自动找并把那个用户的发言标出来。
+4.  如果当前页没找到，会自动翻页接着找。
 
-## 安装
-通过github安装：
+## 安装（需要梯子）
 
-1. 首先安装 [Tampermonkey](https://www.tampermonkey.net/)
-2. 然后点击 [这里](https://github.com/cornradio/jandanusersearch/raw/refs/heads/master/jandan.user.js) 安装脚本（github）
-或者 [这里](https://greasyfork.org/zh-CN/scripts/523770-%E7%85%8E%E8%9B%8B%E7%94%A8%E6%88%B7%E5%90%8D%E6%90%9C%E7%B4%A2) 安装脚本（greasyfork）
+选择适合你的版本安装：
 
-## 使用方法
+*   **电脑版:** [https://greasyfork.org/zh-CN/scripts/523770](https://greasyfork.org/zh-CN/scripts/523770)
+*   **手机版:** [https://greasyfork.org/zh-CN/scripts/534323](https://greasyfork.org/zh-CN/scripts/534323)
 
-1. 在煎蛋网页右上角的搜索框中输入用户名
-2. 按回车或点击搜索按钮
-3. 脚本会自动查找并高亮显示匹配的用户名
-4. 如果当前页面没有找到，会自动翻页继续搜索
+**安装前记得装个油猴脚本管理器（比如 Tampermonkey）。**
 
-## 许可证
+## 推荐试试
 
-MIT License 
+命令行爱好者看这里：
+
+**[jandan树洞命令行客户端 - jandannode](https://github.com/cornradio/jandannode)**
